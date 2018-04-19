@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/vleague2/liri-node-app#readme",
   "dependencies": {
+    "chalk": "^2.4.0",
     "dotenv": "^5.0.1",
     "node-spotify-api": "^1.0.7",
     "request": "^2.85.0",
