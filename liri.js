@@ -17,9 +17,22 @@ const spotify = new Spotify(keys.spotify);
 
 const twitter = new Twitter(keys.twitter);
 
-const command = process.argv[2];
+const nodeArgs = process.argv;
 
-const input = process.argv[3];
+const command = nodeArgs[2];
+
+let input = "";
+
+for (var i = 3; i < nodeArgs.length; i++) {
+
+    if (i > 3 && i < nodeArgs.length) {
+      input = input + "+" + nodeArgs[i];
+    }
+  
+    else {
+      input += nodeArgs[i];
+    }
+}
 
 // Switch statement for the app to decide what to do
 
@@ -64,20 +77,49 @@ function spotifySong() {
 
 };
 
-// output the following information to your terminal/bash window: Title of the movie, Year the movie came out, IMDB Rating of the movie, Rotten Tomatoes Rating of the movie, Country where the movie was produced, Language of the movie, Plot of the movie, Actors in the movie. If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+// output the movie information to your terminal/bash window. If no movie is specified, log the data for Mr. Nobody
 function movieThis() {
-    request("http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy", (error, response, body) => {
 
-        if (input == undefined) {
-            console.log("Mr. Nobody");
-        }
-        
-        else if (!error && response.statusCode === 200) {
+    function logData(body) {
+        let bodyParsed = JSON.parse(body);
 
-            // Parse the body of the site and recover just the imdbRating
-            console.log(chalk.red("The movie's rating is: ") + JSON.parse(body).imdbRating);
-        }
-    });
+        console.log(
+            chalk.red("The movie is ") + bodyParsed.Title + 
+            "\n" +
+            chalk.red("The movie came out in ") + bodyParsed.Year +
+            "\n" +
+            chalk.red("The movie's IMDB rating is ") + bodyParsed.imdbRating +
+            "\n" +
+            chalk.red("The movie's Rotten Tomatoes rating is ") + bodyParsed.Ratings[1].Value +
+            "\n" +
+            chalk.red("The movie was produced in ") + bodyParsed.Country +
+            "\n" +
+            chalk.red("The movie's language is ") + bodyParsed.Language +
+            "\n" +
+            chalk.red("The movie's plot is: ") + bodyParsed.Plot +
+            "\n" +
+            chalk.red("The movie's actors are ") + bodyParsed.Actors
+        );          
+    }
+
+    if (input == "") {
+        let movie = "Mr.+Nobody";
+
+        request("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy", (error, response, body) => {
+            if (!error && response.statusCode === 200) {
+                logData(body);
+            }    
+        });
+    }
+
+    else {
+        request("http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy", (error, response, body) => {
+
+            if (!error && response.statusCode === 200) {
+                logData(body);
+            }
+        });
+    }
 };
 
 // Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands. It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`. Feel free to change the text in that document to test out the feature for other commands
