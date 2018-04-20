@@ -215,12 +215,35 @@ function movieThis() {
 // Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands. It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`. Feel free to change the text in that document to test out the feature for other commands
 function doIt() {
     fs.readFile('random.txt', 'utf8', (err, data) => { 
+        // if there's an error, report it
         if (err) throw err;
 
+        // take the data from the file and separate it
         let dataArr = data.split(',');
+
+        // assign the first item to the command variable
         command = dataArr[0];
+
+        // assign the second item to the input variable
         input = dataArr[1];
 
-
+        // This is not very DRY, but... depending on what the command is, execute a function
+        switch (command) {
+            case 'my-tweets':
+            myTweets();
+            break;
+        
+            case 'spotify-this-song':
+            spotifySong();
+            break;
+        
+            case 'movie-this':
+            movieThis();
+            break;
+        
+            case 'do-what-it-says':
+            doIt();
+            break;   
+        }
     })
 };
