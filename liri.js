@@ -93,42 +93,37 @@ function spotifySong() {
 
     // Create a function that will run the actual search
     function searchSong(data) {
-        // Make the object transveral more readable
-        let dataPath = data.tracks.items[0];
-
+        
         // Log data to the terminal
         console.log(
-            chalk.red("Artist(s): ") + dataPath.album.artists[0].name +
+            chalk.red("Artist(s): ") + data.album.artists[0].name +
             "\n" +
             chalk.red("Song name: ") +
-            dataPath.name +
+            data.name +
             "\n" +
-            chalk.red("Preview link: ") + dataPath.album.external_urls.spotify +
+            chalk.red("Preview link: ") + data.album.external_urls.spotify +
             "\n" +
             chalk.red("Album: ") + 
-            dataPath.album.name
+            data.album.name
         );
     }
 
     // if the user does not enter a song
     if (input == "") {
 
-        // default to The Sign
-        input = "The+Sign";
-        
-        // send a query to the Spotify API
-        spotify.search({ type: 'track', query: input, limit: 1 }, function(err, data) {
+        // Send a request to the API for a specific song (The Sign by Ace of Base)
+        spotify
+        .request('https://api.spotify.com/v1/tracks/3DYVWvPh3kGwPasp7yjahc')
 
-            // if there's an error, return the error
-            if (err) {
-                return console.log('Error occurred: ' + err);
-            }
-
-            // otherwise, run the search function and pass in the data
-            else {
-                searchSong(data);
-            }
+        // then run the searchSong function by passing through the data
+        .then(function(data) {
+            searchSong(data); 
         })
+
+        // if there's an error, console.log it
+        .catch(function(err) {
+            console.error('Error occurred: ' + err); 
+        });
     }
 
     // if the user does enter a search term
@@ -142,9 +137,14 @@ function spotifySong() {
                 return console.log('Error occurred: ' + err);
             }
 
-            // otherwise, run the search function and pass in the data
+            // otherwise....
             else {
-                searchSong(data);
+
+                // Make the object transversal more readable, and specify the path that we receive from the search query
+                let dataPath = data.tracks.items[0];
+
+                // then pass that through to the searchSong function
+                searchSong(dataPath);
             }
         })
     }
