@@ -27,5 +27,4 @@
 5. Dotenv to read the .env file
 
 * Limitations
-1. The do-what-it-says functionality is repetitive code
-2. The song request cannot specify artist, and thus may not be an exact match
+1. The song request cannot specify artist, and thus may not be an exact match
