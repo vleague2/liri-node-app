@@ -233,4 +233,6 @@ function doIt() {
     })
 };
 
+
+// last but not least, run the actual app when the file is run!
 liri(command);
