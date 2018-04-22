@@ -3,10 +3,10 @@
 How to use the app
 
 1. In terminal/command, use Node JS to enter one of the following commands: 
-    a. my-tweets: shows your 20 most recent tweets with timestamps
-    b. movie-this, followed by a movie name: returns data about the movie you enter (if no movie is entered, the app will default to Mr. Nobody)
-    c. spotify-this-song, followed by a song name: returns data about the song you enter (if no song is entered, the app will default to The Sign)
-    d. do-what-it-says: the app reads a random.txt file and executes the text as a command line 
+    * my-tweets: shows your 20 most recent tweets with timestamps
+    * movie-this, followed by a movie name: returns data about the movie you enter (if no movie is entered, the app will default to Mr. Nobody)
+    * spotify-this-song, followed by a song name: returns data about the song you enter (if no song is entered, the app will default to The Sign)
+    * do-what-it-says: the app reads a random.txt file and executes the text as a command line 
 
 What the app does
 
