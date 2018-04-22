@@ -36,24 +36,25 @@ for (var i = 3; i < nodeArgs.length; i++) {
     }
 }
 
-// Switch statement for the app to decide what to do
+// The app itself: switch statement for the app to decide what to do
+function liri(command) {
+    switch (command) {
+        case 'my-tweets':
+        myTweets();
+        break;
 
-switch (command) {
-    case 'my-tweets':
-    myTweets();
-    break;
+        case 'spotify-this-song':
+        spotifySong();
+        break;
 
-    case 'spotify-this-song':
-    spotifySong();
-    break;
+        case 'movie-this':
+        movieThis();
+        break;
 
-    case 'movie-this':
-    movieThis();
-    break;
-
-    case 'do-what-it-says':
-    doIt();
-    break;   
+        case 'do-what-it-says':
+        doIt();
+        break;   
+    }
 }
 
 // shows your last 20 tweets and when they were created at in your terminal/bash window.
@@ -227,23 +228,9 @@ function doIt() {
         // assign the second item to the input variable
         input = dataArr[1];
 
-        // This is not very DRY, but... depending on what the command is, execute a function
-        switch (command) {
-            case 'my-tweets':
-            myTweets();
-            break;
-        
-            case 'spotify-this-song':
-            spotifySong();
-            break;
-        
-            case 'movie-this':
-            movieThis();
-            break;
-        
-            case 'do-what-it-says':
-            doIt();
-            break;   
-        }
+        // Depending on what the command is, execute a function
+        liri(command);
     })
 };
+
+liri(command);
